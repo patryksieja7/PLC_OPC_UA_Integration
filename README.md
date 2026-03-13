@@ -47,29 +47,80 @@ Such architecture allows the creation of a hardware-in-the-loop simulation, wher
 
 <p align="center">
 
-<b>VirtualBox Setup</b><br>
-<img src="https://i.imgur.com/tPrqLWE.png" width="900"><br><br>
+<b>Production Line Layout</b><br>
+<img src="https://i.imgur.com/8NFYI0s.png" width="900"><br><br>
 
-<b>Server Network Adapter Setup</b><br>
-<img src="https://i.imgur.com/1nJDHmu.png" width="400"><br><br>
+The concept presents a simulation of an automated production line for manufacturing industrial housings.
+The system integrates multiple machining stations, sorting mechanisms, assembly operations, palletizing, and automated storage. 
+The production process is designed to simulate a modern industrial environment where material flow, part identification, 
+and product assembly are fully automated.
 
-<b>Server Manager</b><br>
-<img src="https://i.imgur.com/Ibqi7eu.png" width="900"><br><br>
+The production line is structured to ensure a logical flow of operations, beginning with part machining and ending with 
+palletizing and automated warehouse storage. The system allows efficient handling of multiple product variants 
+based on color and component type.
 
-<b>DHCP Address Lease</b><br>
-<img src="https://i.imgur.com/4yAc9cG.png" width="900"><br><br>
 
-<b>Active Directory Users Creation</b><br>
-<img src="https://i.imgur.com/802Nyuy.png" width="900"><br><br>
+<h2>Automation Components</h2>
 
-<b>Group Policy Management</b><br>
-<img src="https://i.imgur.com/5eZkaTp.png" width="900"><br><br>
+<ul>
+<li>Industrial robots for machine tending</li>
+<li>CNC machining centers</li>
+<li>Vision sensor for color detection</li>
+<li>Rotary and Pivot Arm sorters</li>
+<li>Conveyor transport system</li>
+<li>Two-axis manipulator for assembly</li>
+<li>Three-axis XYZ palletizing manipulator</li>
+<li>Automated warehouse stacker crane</li>
+</ul>
 
-<b>Automatic Shared Folder Mapping for Client</b><br>
-<img src="https://i.imgur.com/u9paH9j.png" width="900"><br><br>
 
-<b>Windows Client Joined to Domain (whoami + ipconfig)</b><br>
-<img src="https://i.imgur.com/6WtwzWO.png" width="900"><br><br>
+<h2>Process Flow</h2>
+
+<ol>
+<li>Material machining at CNC workstations</li>
+<li>Transport of processed parts to the main conveyor line</li>
+<li>Sorting of parts by color using a vision sensor</li>
+<li>Identification of part type (housing or cover)</li>
+<li>Product assembly using a vacuum manipulator</li>
+<li>Palletizing of finished products using an XYZ manipulator</li>
+<li>Final sorting and automated warehouse storage</li>
+</ol>
+
+<b>OPC UA Server Setup</b><br>
+<img src="https://i.imgur.com/3kjfY55.png" width="900"><br><br>
+
+The built-in OPC UA server of the RX3i controller was enabled to allow communication with external applications. Anonymous authentication was used for client access, and the server operates over the standard TCP/IP protocol using the Ethernet interface of the controller. The OPC UA server operation is managed using the OPC_UA_Server function block, responsible for configuration and control of the server.
+
+<b>PLC Program Structure</b><br>
+<img src="https://i.imgur.com/QGyUkEG.png" width="600"><br><br>
+
+The control program was developed in Ladder Logic (LAD) using Proficy Machine Edition. A modular programming approach was used, where separate function blocks were created for each section of the production line in Factory I/O. These blocks are executed cyclically in the main program _MAIN, improving program readability, structure, and scalability.
+
+<b>Manipulator Position Control</b><br>
+<img src="https://i.imgur.com/CxW6fTC.png" width="900"><br><br>
+
+Control of the Pick and Place manipulator is implemented using a hybrid analog-digital architecture. Digital signals handle sensors and sequential logic, while the target positions of the X and Z axes are controlled analogously using MOVE instructions. All control values are expressed in volts, and the current axis positions are read from Factory I/O using the variables F_PP_X_ActualPos and F_PP_Z_ActualPos, representing the real-time position of the manipulator.
+
+<b>Factory I/O OPC UA Client Configuration</b><br>
+<img src="https://i.imgur.com/YWrjsHp.png" width="900"><br><br>
+
+<b>Factory I/O Address Mapping</b><br>
+<img src="https://i.imgur.com/3PGqeUj.png" width="900"><br><br>
+
+<b>HMI Assembly Screen</b><br>
+<img src="https://i.imgur.com/MQW3yPn.png" width="900"><br><br>
+
+The screen allows selection of sorting for green or blue products and provides real-time monitoring of the assembly process. It is divided into four sections displaying the status of the lid positioner, base positioner, pivot sorter, and Pick and Place manipulator, including gripper state, object detection, and current X and Z axis positions.
+
+<b>HMI Three-axis manipulator screen</b><br>
+<img src="https://i.imgur.com/h1PBtOB.png" width="900"><br><br>
+
+HMI screen displaying the status of the Pick and Place XYZ manipulator. The interface is divided into two sections: the Positioner section showing variables related to the positioner operation, and the XYZ section presenting the current gripper state and the manipulator positions along the X, Y, and Z axes. The bottom part of the screen indicates the presence of a pallet at the product placement station.
+
+<b>Alternative OPC UA Communication</b><br>
+<img src="https://i.imgur.com/NqztftU.png" width="900"><br><br>
+
+KEPServerEX is used as an external OPC UA server because not all PACSystems controllers support a built-in OPC UA server. In this setup, the VersaMax CPUE05 PLC communicates with KEPServerEX via the GE Ethernet driver, which then exposes the PLC variables through OPC UA for external applications such as simulation or visualization software.
 
 </p>
 
