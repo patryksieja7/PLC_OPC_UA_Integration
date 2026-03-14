@@ -11,6 +11,17 @@ Communication between the simulation environment and the controller was establis
 Additionally, the project includes configuration of an HMI interface used for monitoring and controlling the production process. The implemented solution demonstrates practical integration of simulation software, industrial controllers, and communication protocols used in modern automated production systems.
 
 The project demonstrates practical skills in PLC programming, industrial communication, virtual commissioning, and integration of automation systems.
+
+<h2>System Demonstration</h2>
+
+<p>
+Short video showing the automated production line operating in the Factory I/O environment 
+controlled by the Emerson RX3i PLC. The demonstration presents sorting, assembly, 
+and palletizing processes executed in real time through OPC UA communication.
+</p>
+
+[Production Line Video](https://youtu.be/1cXo7rXXGnI)
+
 <h2>Communication Architecture Diagram</h2>
 <img src="https://i.imgur.com/NdHWVhM.png" width="900"><br><br>                  
 
